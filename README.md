@@ -1,2 +1,2 @@
 # Client
-A simple PHP client
+A basic PHP client

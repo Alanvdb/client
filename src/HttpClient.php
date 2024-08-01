@@ -11,17 +11,41 @@ use AlanVdb\Http\Exception\InvalidClientParamException;
 use AlanVdb\Http\Exception\ClientCouldNotProcessException;
 use GuzzleHttp\Psr7\Response;
 
+/**
+ * Class HttpClient
+ *
+ * A simple HTTP client implementation using cURL.
+ */
 class HttpClient implements ClientInterface
 {
+    /**
+     * @var ResponseFactoryInterface $responseFactory The response factory used to create HTTP responses.
+     */
     private ResponseFactoryInterface $responseFactory;
+
+    /**
+     * @var resource $curlHandle The cURL handle.
+     */
     public $curlHandle;
 
+    /**
+     * HttpClient constructor.
+     *
+     * @param ResponseFactoryInterface $responseFactory The response factory used to create HTTP responses.
+     */
     public function __construct(ResponseFactoryInterface $responseFactory)
     {
         $this->responseFactory = $responseFactory;
         $this->curlHandle = curl_init();
     }
 
+    /**
+     * Sends a PSR-7 request and returns a PSR-7 response.
+     *
+     * @param RequestInterface $request The PSR-7 request to send.
+     * @return ResponseInterface The PSR-7 response received.
+     * @throws ClientCouldNotProcessException If a cURL error occurs.
+     */
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
         $url = (string) $request->getUri();
@@ -56,6 +80,9 @@ class HttpClient implements ClientInterface
         return new Response($statusCode, $headers, $stream);
     }
 
+    /**
+     * Destructor to close the cURL handle.
+     */
     public function __destruct()
     {
         if ($this->curlHandle) {

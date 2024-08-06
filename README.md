@@ -1,31 +1,44 @@
-# Client
+# HttpClient
 
-A basic PHP client.
+A basic PHP client implementation using cURL, adhering to PSR standards.
+
+## Overview
+
+The `HttpClient` library provides a simple and extensible HTTP client interface, implementing the PSR-18 `ClientInterface`. It allows you to send HTTP requests and receive responses in a standardized way.
+
+## Features
+
+- Simple and easy-to-use API
+- PSR-18 compliant
+- Uses cURL for making HTTP requests
+- Supports various HTTP methods (GET, POST, PUT, DELETE, etc.)
+- Customizable HTTP headers and request bodies
+- Handles SSL verification
 
 ## Installation
 
-Pour installer ce client PHP, utilisez Composer. Exécutez la commande suivante dans votre terminal :
+To install the `HttpClient` library, use Composer:
 
 ```sh
-composer require alanvdb/client
+composer require alanvdb/http-client
 ```
 
-## Utilisation
+## Usage
 
-Voici un exemple de base pour utiliser le client :
+Here is an example of how to use the `HttpClient`:
 
 ```php
 <?php
 
 require 'vendor/autoload.php';
 
-use AlanVdb\Client\Client;
+use AlanVdb\Http\HttpClient;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\ResponseFactory;
 
 $responseFactory = new ResponseFactory();
-$client = new Client($responseFactory, '/path/to/your/cert.pem');
+$client = new HttpClient($responseFactory);
 
 $request = new Request('GET', 'https://api.example.com/data');
 $response = $client->sendRequest($request);
@@ -33,26 +46,18 @@ $response = $client->sendRequest($request);
 echo $response->getBody();
 ```
 
-## Tests
+## Testing
 
-Pour exécuter les tests, utilisez PHPUnit. Assurez-vous d'avoir PHPUnit installé et exécutez la commande suivante :
+To run the tests, use PHPUnit. Ensure you have PHPUnit installed and execute the following command:
 
 ```sh
 vendor/bin/phpunit
 ```
 
-## Contribution
+## License
 
-Les contributions sont les bienvenues ! Veuillez suivre ces étapes pour contribuer :
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-1. Fork le projet
-2. Créez une branche pour votre fonctionnalité (`git checkout -b feature/AmazingFeature`)
-3. Commitez vos modifications (`git commit -m 'Add some AmazingFeature'`)
-4. Poussez vers la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrez une Pull Request
+## Issues and Feedback
 
-Assurez-vous que votre code suit les conventions de codage PSR et que toutes les nouvelles fonctionnalités sont couvertes par des tests.
-
-## Licence
-
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+If you encounter any issues or have feedback, please open an issue on the [GitHub repository](https://github.com/alanvdb/http-client/issues).
